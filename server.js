@@ -87,9 +87,9 @@ function deleteBook(request,response){
 
 async function addBook(request,response){
 
-  const {title,description,statis,email} = request.body;
+  const {title,description,status,email} = request.body;
 
-  await BookModel.create({title,description,statis,email})
+  await BookModel.create({title,description,status,email})
 
   BookModel.find({email: email}, (err, result) => {
     if (err) {
