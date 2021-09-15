@@ -63,9 +63,28 @@ app.get("/", homeHandle);
 app.get("/books", bookHandle);
 app.post("/addBooks",addBook);
 app.delete('/deleteBook/:id', deleteBook)
+app.put('/updateBook/:id', updateBook)
 
 function homeHandle(request, response) {
   response.send("Welcome to Backend Home!!");
+}
+
+function updateBook(request,response)
+{
+  const id = request.params.id;
+  const email = request.query.email;
+  const {title,description,status} = request.body;
+
+  BookModel.findByIdAndUpdate(id,{title,description,status},(err,result)=>{
+    BookModel.find({email: email}, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        response.send(result);
+        console.log('sending data back.....',result);
+      }
+    });
+  })
 }
 
 function deleteBook(request,response){
